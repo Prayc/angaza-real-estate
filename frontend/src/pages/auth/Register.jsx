@@ -154,7 +154,7 @@ const Register = () => {
                   <SelectValue placeholder="Select your role" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="tenant">Tenant</SelectItem>
+                  {/* <SelectItem value="tenant">Tenant</SelectItem> */}
                   <SelectItem value="landlord">Landlord</SelectItem>
                 </SelectContent>
               </Select>
