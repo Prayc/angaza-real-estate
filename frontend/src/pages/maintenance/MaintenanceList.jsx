@@ -27,7 +27,7 @@ import {
 import { Badge } from '../../components/ui/badge';
 import { Label } from '../../components/ui/label';
 import { Filter, Plus, Settings } from 'lucide-react';
-// import useAuthStore from '../../store/authStore';
+import useAuthStore from '../../store/authStore';
 
 const MaintenanceList = () => {
   const [maintenanceRequests, setMaintenanceRequests] = useState([]);
@@ -35,7 +35,7 @@ const MaintenanceList = () => {
   const [error, setError] = useState(null);
   const [statusFilter, setStatusFilter] = useState('all');
   const navigate = useNavigate();
-  // const { user } = useAuthStore();
+  const { user } = useAuthStore();
 
   useEffect(() => {
     const fetchMaintenanceRequests = async () => {
@@ -203,7 +203,8 @@ const MaintenanceList = () => {
               <p className="text-muted-foreground mb-6">
                 {statusFilter !== 'all'
                   ? `There are no maintenance requests with '${statusFilter}' status.`
-                  : 'You have not submitted any maintenance requests yet.'}
+                  : user.role === 'tenant' &&
+                    'You have not submitted any maintenance requests yet.'}
               </p>
               <Button onClick={() => navigate('/maintenance/add')}>
                 <Plus className="h-4 w-4 mr-2" />
