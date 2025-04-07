@@ -10,7 +10,7 @@ const router = express.Router();
 router.post(
   '/',
   authenticate,
-  authorize(['admin', 'property_manager', 'landlord']),
+  authorize(['admin', 'landlord', 'property_manager']),
   async (req, res) => {
     try {
       const { name, email, password, phone } = req.body;
@@ -55,7 +55,7 @@ router.post(
 router.get(
   '/',
   authenticate,
-  authorize(['admin', 'property_manager', 'landlord']),
+  authorize(['admin', 'landlord', 'property_manager']),
   async (req, res) => {
     try {
       let where = { role: 'tenant' };
@@ -274,7 +274,8 @@ router.get(
             lease.unit.property.landlordId === req.user.id
         );
 
-        const wasCreatedByLandlord = tenant.createdBy === req.user.id;
+        const wasCreatedByLandlord =
+          tenant.creator && tenant.creator.id === req.user.id;
 
         // Log for debugging
         console.log('Tenant access check:', {
@@ -303,7 +304,7 @@ router.get(
 router.put(
   '/:id',
   authenticate,
-  authorize(['admin', 'property_manager']),
+  authorize(['admin', 'landlord', 'property_manager']),
   async (req, res) => {
     try {
       const { name, email, phone, isActive } = req.body;

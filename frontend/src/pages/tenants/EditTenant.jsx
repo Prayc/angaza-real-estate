@@ -25,7 +25,9 @@ const EditTenant = () => {
   const { user } = useAuthStore();
 
   // Check if user has permission to edit tenants
-  const canEditTenant = ['admin', 'property_manager'].includes(user?.role);
+  const canEditTenant = ['admin', 'landlord', 'property_manager'].includes(
+    user?.role
+  );
 
   const {
     register,
@@ -112,7 +114,7 @@ const EditTenant = () => {
         <Button
           variant="ghost"
           size="sm"
-          onClick={() => navigate(`/tenants/${id}`)}
+          onClick={() => navigate(-1)}
           className="mr-4"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />

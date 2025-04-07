@@ -37,7 +37,9 @@ const TenantDetails = () => {
   const { user } = useAuthStore();
 
   // Check if user has permission to edit tenant
-  const canEditTenant = ['admin', 'property_manager'].includes(user?.role);
+  const canEditTenant = ['admin', 'landlord', 'property_manager'].includes(
+    user?.role
+  );
 
   useEffect(() => {
     const fetchTenant = async () => {
