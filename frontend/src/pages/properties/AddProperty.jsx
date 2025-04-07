@@ -29,6 +29,7 @@ const AddProperty = () => {
   const [landlords, setLandlords] = useState([]);
   const { user } = useAuthStore();
   const navigate = useNavigate();
+  const [imageFile, setImageFile] = useState(null);
 
   const isAdmin = user?.role === 'admin';
 
@@ -74,6 +75,7 @@ const AddProperty = () => {
         setPreviewImage(reader.result);
       };
       reader.readAsDataURL(file);
+      setImageFile(file);
     }
   };
 
@@ -85,8 +87,8 @@ const AddProperty = () => {
       console.log('DATA', data);
 
       // Get the file from the ref
-      const imageFile = fileInputRef.current?.files[0];
-      console.log('Image file from ref:', imageFile);
+      // const imageFile = fileInputRef.current?.files[0];
+      // console.log('Image file from ref:', imageFile);
 
       const formData = new FormData();
 

@@ -205,7 +205,7 @@ router.put(
       if (!property) {
         return res.status(404).json({ message: 'Property not found' });
       }
-
+      
       // Check if user is authorized to update this property
       if (req.user.role !== 'admin' && property.landlordId !== req.user.id) {
         return res
@@ -262,9 +262,8 @@ router.put(
           folder: 'angaza-properties',
           resource_type: 'image',
         });
-
         property.image = uploadResult.secure_url;
-      }
+      }       
 
       await property.save();
 

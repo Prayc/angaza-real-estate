@@ -113,7 +113,7 @@ const PropertyDetails = () => {
           <div className="rounded-lg overflow-hidden h-64 mb-6">
             {property.image ? (
               <img
-                src={`${import.meta.env.VITE_API_URL}${property.image}`}
+                src={`${property.image}`}
                 alt={property.name}
                 className="w-full h-full object-cover"
               />

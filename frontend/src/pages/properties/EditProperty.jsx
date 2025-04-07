@@ -27,6 +27,7 @@ const EditProperty = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(true);
   const [error, setError] = useState('');
+  const [imageFile, setImageFile] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
   const [landlords, setLandlords] = useState([]);
   const navigate = useNavigate();
@@ -106,6 +107,7 @@ const EditProperty = () => {
         setPreviewImage(reader.result);
       };
       reader.readAsDataURL(file);
+      setImageFile(file);
     }
   };
 
@@ -115,16 +117,17 @@ const EditProperty = () => {
       setError('');
 
       const formData = new FormData();
+      data["image"] = [imageFile];
       Object.keys(data).forEach((key) => {
-        if (key === 'image' && data[key] && data[key][0]) {
-          formData.append(key, data[key][0]);
+        if (key === 'image' && data[key] && data[key].length > 0) {
+          formData.append(key, imageFile);
         } else if (key !== 'image') {
           formData.append(key, data[key]);
         }
       });
 
       await updateProperty(id, formData);
-      navigate(`/properties/${id}`);
+      // navigate(`/properties/${id}`);
     } catch (error) {
       console.error('Error updating property:', error);
       setError(
@@ -164,7 +167,7 @@ const EditProperty = () => {
           <CardTitle>Property Information</CardTitle>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" encType="multipart/form-data">
             {error && (
               <div className="bg-destructive/15 text-destructive p-3 rounded-md">
                 {error}
@@ -350,6 +353,7 @@ const EditProperty = () => {
                       <Input
                         id="image"
                         type="file"
+                        name="image"
                         accept="image/*"
                         {...register('image')}
                         onChange={handleImageChange}
